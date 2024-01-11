@@ -53,10 +53,10 @@ export default function Home() {
                 <h3 className="text-3xl font-bold font-montserrat">
                   {blog.meta.title}
                 </h3>
-                <p className="text-gray-400 text-sm font-merriweather">
+                <p className="text-gray-400 text-sm font-merriweather ">
                   {blog.meta.date}
                 </p>
-                <p className="text-gray-400 text-xl font-merriweather">
+                <p className="text-gray-400 text-2xl font-merriweather text-[16px]">
                   {blog.meta.description}
                 </p>
               </div>
