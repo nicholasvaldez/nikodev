@@ -5,6 +5,7 @@ import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Button from '@/app/components/mdx/Button'
 
+
 export async function generateStaticParams() {
     const files = fs.readdirSync(path.join('blogs'))
 
@@ -26,6 +27,8 @@ function getPost({slug}:{slug : string}){
         content
     }
 }
+
+
 
 export default function Post({ params } :any) {
     const props = getPost(params);
