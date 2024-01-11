@@ -43,13 +43,11 @@ export default function Home() {
   });
 
   return (
-    <main className="flex flex-col">
-        
-
-      <section className="py-12">
+    <main >
+      <section className="flex flex-col gap-8 py-12">
           {blogs.map((blog) => (
             <Link href={"/blogs/" + blog.slug} passHref key={blog.slug}>
-              <div className="py-2 flex flex-col gap-1 transition ease-in-out hover:scale-[100.5%] duration-300">
+              <div className="py-4 flex flex-col gap-1 transition ease-in-out hover:scale-[100.5%] duration-300">
                 <h3 className="text-3xl font-bold font-montserrat">
                   {blog.meta.title}
                 </h3>

@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className="max-w-3xl mx-auto py-12">
       <Link href="/">
           <h1 className="text-2xl font-bold font-montserrat bg-gradient-to-r from-blue-500  to-sky-200 text-transparent bg-clip-text inline-block">
-              NeekoDev<span className="text-5xl">.</span>
+              NeekoDev<span className="text-4xl">.</span>
             </h1>
       </Link>
         {children}</body>
