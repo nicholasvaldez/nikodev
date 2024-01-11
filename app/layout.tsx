@@ -28,9 +28,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${Monserrat_init.variable} ${Merriweather_init.variable} bg-zinc-900 text-white max-w-2xl mx-auto py-10 px-4`}
+      className={`${Monserrat_init.variable} ${Merriweather_init.variable} bg-zinc-900 text-white`}
     >
-      <body>{children}</body>
+      <body className="max-w-2xl mx-auto py-10 px-4">
+      <h1 className="text-3xl font-bold font-montserrat bg-gradient-to-r from-blue-500  to-sky-200 text-transparent bg-clip-text inline-block">
+          NeekoDev<span className="text-5xl">.</span>
+        </h1>
+        {children}</body>
     </html>
   )
 }
