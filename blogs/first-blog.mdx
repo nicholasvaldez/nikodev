@@ -1,33 +1,60 @@
 ---
-title: My First Blog
-date: "April 18th 2020"
-description: Welcome to my first blog.
+title: Unit Testing in .NET with XUnit
+date: "January 17th 2024"
+description: Going over what I learned today about Unit Testing
 ---
 
-This is my **first** blog post using _markdown_.
+#### 1. Test Method Overview
+The purpose of this unit test is to validate the behavior of a cache operation when a token does not exist. The test ensures that the cache key is correctly added with one attempt under this specific scenario.
 
-### My subheading
-
-Here is an image:
-
-![Laptop on Desk](/img/laptop.jpg)
-
-There is a code snippet below:
-
-```
-export function myComponent(){
-    return (
-        <p>test</p>
-    )
+```csharp
+[Fact]
+public async Task CacheOperation_TokenNotExists_AddsCacheKeyWithOneAttempt() {
+    // ...
 }
 ```
-And here is my first button !!!
 
-<Button text="my button"/>
+#### 2. Mock Setup
+The test sets up mocks using the Moq framework to simulate dependencies for the cache operation.
 
-And here is a table!!
+##### 2.1. Cache Service Mock Setup
+The cache service mock is configured to return a false result for data retrieval, simulating the absence of the token in the cache.
 
-| Col 1 | Col 2 |
-| ----- | ----- |
-| val 1 | val 2 |
-| val 3 | val 4 |
+```csharp
+var itemId = "123456-789";
+var category = "789";
+var cacheKey = $"{itemId}_Token";
+var request = TestHelper.GetRequest(ItemId: itemId);
+var returnedData = TestHelper.GetTestData("987654321", category);
+
+mockCacheService.Setup(prop => prop.GetDataFromCacheAsync<string>(It.IsAny<string>())).ReturnsAsync((false, "", new TimeSpan()));
+```
+
+##### 2.2. Data Service Mock Setup
+The data service mocks are configured to return a specific set of data and indicate the existence of the category.
+
+```csharp
+mockDataService.Setup(prop => prop.Data_GetByIdAsync(It.IsAny<IList<string>>(), It.IsAny<CancellationToken>()))
+    .ReturnsAsync(new List<IDictionary<string, string>> { returnedData });
+mockDataService.Setup(prop => prop.Category_ExistsAsync(It.IsAny<int?>(), It.IsAny<CancellationToken>()))
+    .ReturnsAsync(true);
+```
+
+#### 3. Execution
+The test executes the cache operation method with the provided request.
+
+```csharp
+var results = await testedClass.ProcessRequest(request);
+```
+
+#### 4. Assertion
+Assertions are made to verify that the cache key is added correctly with the expected parameters.
+
+```csharp
+var expectedCacheKey = "123456-789_Token";
+var expectedAttempts = 1;
+var expectedExpiryAsInt = 60;
+
+mockCacheService.Verify(prop => prop.AddDataToCacheAsync(expectedCacheKey, expectedAttempts, expectedExpiryAsInt), Times.Once());
+```
+
