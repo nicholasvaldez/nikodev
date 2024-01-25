@@ -41,11 +41,15 @@ export default function Post({ params } :any) {
     const props = getPost(params);
 
     return (
-        <article className='prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert py-12'>
-            <h1>{props.frontMatter.title}</h1>
-            
-            {/* @ts-expect-error Server Component*/}
-            <MDXRemote source={props.content} components={{Button}} options={options}/>
+        <article>
+          
+                <h1 className="text-3xl font-black font-montserrat text-[40px] leading-[44px]">{props.frontMatter.title}</h1>
+                <p className='text-sm font-merriweather mt-2 text-gray-400'>{props.frontMatter.date}</p>
+          
+            <div className='prose prose-sm md:prose-base lg:prose-base prose-slate !prose-invert font-merriweather mt-10'>
+                {/* @ts-expect-error Server Component*/}
+                <MDXRemote source={props.content} components={{Button}} options={options}/>
+            </div>
         </article>
     )
 }

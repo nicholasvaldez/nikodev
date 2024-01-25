@@ -1,60 +1,48 @@
 ---
-title: Unit Testing in .NET with XUnit
-date: "January 17th 2024"
-description: Going over what I learned today about Unit Testing
+title: README.md
+date: "January 25th 2024"
+description: Welcome to NeekoDev. Join me on an authentic journey of a Software Developer
 ---
 
-#### 1. Test Method Overview
-The purpose of this unit test is to validate the behavior of a cache operation when a token does not exist. The test ensures that the cache key is correctly added with one attempt under this specific scenario.
 
-```csharp
-[Fact]
-public async Task CacheOperation_TokenNotExists_AddsCacheKeyWithOneAttempt() {
-    // ...
-}
-```
+## An Introduction 
 
-#### 2. Mock Setup
-The test sets up mocks using the Moq framework to simulate dependencies for the cache operation.
+Hey. 'Sup.
 
-##### 2.1. Cache Service Mock Setup
-The cache service mock is configured to return a false result for data retrieval, simulating the absence of the token in the cache.
+Welcome to **NeekoDev.**
 
-```csharp
-var itemId = "123456-789";
-var category = "789";
-var cacheKey = $"{itemId}_Token";
-var request = TestHelper.GetRequest(ItemId: itemId);
-var returnedData = TestHelper.GetTestData("987654321", category);
+First and foremost, this is not a 'blog' per say. 
+Think of it as a glorified notebook of things that I'm currently learning in my current role as Software Developer. I use the term 'blog' lightly here as these are in-fact article writings, but for an audience of one - myself. 
 
-mockCacheService.Setup(prop => prop.GetDataFromCacheAsync<string>(It.IsAny<string>())).ReturnsAsync((false, "", new TimeSpan()));
-```
+I fully intend to use this site to reinforce my learning and track my *~journey~* ✨  as a Dev. I figure that it also gives me an excuse to dive deeper into research and fully explore the topics that I choose to write about. So who am I?
+## Neeko
 
-##### 2.2. Data Service Mock Setup
-The data service mocks are configured to return a specific set of data and indicate the existence of the category.
+No, I don't main Neeko in League of Legends. my name is Nicholas or Nick or Nico and my wife's name is Neeka and.. well?  Get it? My main in LOL was Wukong anyways.
 
-```csharp
-mockDataService.Setup(prop => prop.Data_GetByIdAsync(It.IsAny<IList<string>>(), It.IsAny<CancellationToken>()))
-    .ReturnsAsync(new List<IDictionary<string, string>> { returnedData });
-mockDataService.Setup(prop => prop.Category_ExistsAsync(It.IsAny<int?>(), It.IsAny<CancellationToken>()))
-    .ReturnsAsync(true);
-```
+Look, I'm not gonna lie to you, (me?) I'm not a prominent thought leader in this world. I'm just a guy who's 8 weeks into to his first job as a Developer hoping to grow in this career field. Which brings me to my next point: the **other** reason why I wanted to start this ~~blog~~ *website(?).* 
 
-#### 3. Execution
-The test executes the cache operation method with the provided request.
+I noticed that the blogs I frequent , granted I don't do this often, or see being reviewed on YouTube, discuss topics that are either very simplified or advanced/ requires years of experience to even understand what they are talking about.  There's a blind spot of Devs going through it in real time discussing their experiences and what they're learning **in order** of what they're learning.
 
-```csharp
-var results = await testedClass.ProcessRequest(request);
-```
+So, okay, secrets out, maybe I *am* writing as if somebody reads these writings other than me someday. If you do, I hope I can shed some light on what an experience-challenged dev may be learning at work, or even in life honestly, if you're into that.
 
-#### 4. Assertion
-Assertions are made to verify that the cache key is added correctly with the expected parameters.
+## Closing Thoughts
 
-```csharp
-var expectedCacheKey = "123456-789_Token";
-var expectedAttempts = 1;
-var expectedExpiryAsInt = 60;
+As I wrap up this inaugural post on NeekoDev, I can't help but feel a mix of excitement and curiosity about the journey ahead. This space is not just a collection of articles; it's a living documentation of my growth, stumbles, and victories in the vast world of software development.
 
-mockCacheService.Verify(prop => prop.AddDataToCacheAsync(expectedCacheKey, expectedAttempts, expectedExpiryAsInt), Times.Once());
-```
+To whoever might stumble upon these digital pages, whether it's a fellow developer navigating their own challenges or a future version of myself reflecting on the early days—I welcome you.
+
+As I pen down my thoughts and discoveries, I'm reminded that every line of code written, every bug fixed, and every "aha" moment is a step forward. So here's to the lines of code yet to be written, the bugs waiting to be discovered, and the countless "aha" moments that lie ahead.
+
+Until next time.
+
+Nick 
+
+
+
+
+
+
+
+
+
 
